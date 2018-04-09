@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.serviceexample.MainActivity">
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_service" />
+
+    <Button
+        android:id="@+id/btnStop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/stop_service" />
+
+    <Button
+        android:id="@+id/btnBind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bind_service" />
+
+    <Button
+        android:id="@+id/btnUnbind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/unbind_service" />
+
+    <Button
+        android:id="@+id/btnFetch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fetch_data_from_service" />
+
+    <TextView
+        android:id="@+id/txtDataFetched"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:gravity="center" />
+
+
+</LinearLayout>

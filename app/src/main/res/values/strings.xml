@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ServiceExample</string>
+    <string name="start_service">Start Service</string>
+    <string name="stop_service">Stop Service</string>
+    <string name="bind_service">Bind Service</string>
+    <string name="unbind_service">Unbind Service</string>
+    <string name="fetch_data_from_service">Fetch Data From Service</string>
+
+    <string name="string_startthread">Start Thread</string>
+    <string name="string_stopthread">Stop thread</string>
+    <string name="string_startservice">Start Service</string>
+    <string name="string_stopservice">Stop Service</string>
+    <string name="service_demo_tag">ServiceDemo</string>
+    <string name="string_bind">Bind Service</string>
+    <string name="string_unbind">Unbind Service</string>
+    <string name="string_getrandom_number">Get random number</string>
+</resources>
