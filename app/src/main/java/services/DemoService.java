@@ -26,7 +26,7 @@ public class DemoService extends Service {
     private class RandomNumberRequestHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            Log.i(getString(R.string.service_demo_tag), "Message intercepted");
+            Log.e(getString(R.string.service_demo_tag), "Message intercepted");
             switch (msg.what) {
                 case GET_COUNT:
                     Message messageSendRandomNumber = Message.obtain(null, GET_COUNT);
@@ -34,7 +34,7 @@ public class DemoService extends Service {
                     try {
                         msg.replyTo.send(messageSendRandomNumber);
                     } catch (RemoteException e) {
-                        Log.i(getString(R.string.service_demo_tag), "" + e.getMessage());
+                        Log.e(getString(R.string.service_demo_tag), "" + e.getMessage());
                     }
             }
             super.handleMessage(msg);
@@ -42,6 +42,12 @@ public class DemoService extends Service {
     }
 
     public class MyServiceBinder extends Binder {
+        /**
+         * overide the method getService(),
+         * this method will return the service instance.
+         *
+         * @return
+         */
         public DemoService getService() {
             return DemoService.this;
         }
@@ -49,7 +55,9 @@ public class DemoService extends Service {
 
     private IBinder mBinder = new MyServiceBinder();
 
-    private Messenger randomNumberMessenger = new Messenger(new RandomNumberRequestHandler());
+    /**
+     * Return the mBinder in onBind() method
+     */
 
     @Nullable
     @Override
@@ -60,28 +68,35 @@ public class DemoService extends Service {
     @Override
     public void onRebind(Intent intent) {
         super.onRebind(intent);
-        Log.i(getString(R.string.service_demo_tag), "In OnReBind");
+        Log.e(getString(R.string.service_demo_tag), "In OnReBind");
     }
+
+    private Messenger randomNumberMessenger = new Messenger(new RandomNumberRequestHandler());
 
     @Override
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
-        Log.i(getString(R.string.service_demo_tag), "Service Started");
+        Log.e(getString(R.string.service_demo_tag), "Service Started");
     }
-
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         stopRandomNumberGenerator();
-        Log.i(getString(R.string.service_demo_tag), "Service Destroyed");
+        Log.e(getString(R.string.service_demo_tag), "Service Destroyed");
     }
 
-
+    /**
+     * onStartCommand() this method will be executed first when you will start the service.
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(getString(R.string.service_demo_tag), "In onStartCommend, thread id: " + Thread.currentThread().getId());
+        Log.e(getString(R.string.service_demo_tag), "In onStartCommend, thread id: " + Thread.currentThread().getId());
         mIsRandomGeneratorOn = true;
+        /**
+         * startRandomNumberGenerator() is getting called on a new Thread, as it is advised to
+         * always execute your task in a separate Thread.
+         * */
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -94,15 +109,15 @@ public class DemoService extends Service {
     private void startRandomNumberGenerator() {
         while (mIsRandomGeneratorOn) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1000); // After every 1 sec, a new Random Number will be generated.
                 if (mIsRandomGeneratorOn) {
                     int MIN = 0;
                     int MAX = 100;
                     mRandomNumber = new Random().nextInt(MAX) + MIN;
-                    Log.i(getString(R.string.service_demo_tag), "Thread id: " + Thread.currentThread().getId() + ", Random Number: " + mRandomNumber);
+                    Log.e(getString(R.string.service_demo_tag), "Thread id: " + Thread.currentThread().getId() + ", Random Number: " + mRandomNumber);
                 }
             } catch (InterruptedException e) {
-                Log.i(getString(R.string.service_demo_tag), "Thread Interrupted");
+                Log.e(getString(R.string.service_demo_tag), "Thread Interrupted");
             }
 
         }
@@ -114,7 +129,7 @@ public class DemoService extends Service {
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Log.i(getString(R.string.service_demo_tag), "In onUnbind");
+        Log.e(getString(R.string.service_demo_tag), "In onUnbind");
         return super.onUnbind(intent);
     }
 
